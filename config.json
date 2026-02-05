@@ -1,0 +1,11 @@
+{
+  "max_ips": 1000000,
+  "shards": 128,
+  "token_bucket": {
+    "max_tokens": 5.0,
+    "refill_rate": 1.0,
+    "token_cost": 1.0,
+    "expiry_seconds": 30,
+    "janitor_interval_seconds": 5
+  }
+}

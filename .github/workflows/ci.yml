@@ -1,0 +1,42 @@
+name: C++ CI (Build & Lint)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake g++ clang-format clang-tidy
+
+    - name: 1. Format Check
+      run: |
+        # Only check project directories. 
+        # Using 'src tests include' prevents crawling into build/_deps
+        find src tests include -type f \( -name "*.cpp" -o -name "*.h" -o -name "*.hpp" \) | xargs clang-format --dry-run --Werror
+
+    - name: 2. Configure & Build
+      run: |
+        # Generate compile_commands.json so clang-tidy knows how to parse your code
+        cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+        cmake --build build
+    
+    - name: 3. Clang-Tidy Analysis
+      run: |
+        # 1. ^(src|include|tests) ensures the path MUST start with your folders
+        # 2. --system-headers=0 explicitly ignores third-party library headers
+        # 3. Removed --fix-errors to ensure CI only reports and doesn't try to rewrite deps
+        find src tests -name "*.cpp" | xargs clang-tidy -p build \
+          --header-filter='^(src/|include/|tests/).*' \
+          --system-headers=0 \
+          --extra-arg=-Wno-everything

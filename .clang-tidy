@@ -1,0 +1,7 @@
+---
+InheritParentConfig: false
+# Only enable "Safe" checks. No performance or modernization suggestions.
+Checks: 'clang-diagnostic-*,bugprone-empty-catch,readability-braces-around-statements'
+WarningsAsErrors: '*'
+HeaderFilterRegex: '^(src/|include/|tests/)'
+---
