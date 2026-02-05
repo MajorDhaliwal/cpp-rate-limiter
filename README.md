@@ -12,7 +12,7 @@ A robust, thread-safe rate limiting library implemented in C++. This project fea
 Before building the project, ensure you have the following installed:
 
 * **Compiler**: GCC 9+ or Clang 10+ (Requires C++17 support)
-* **Build System**: [CMake](https://cmake.org/download/) 3.10 or higher
+* **Build System**: [CMake](https://cmake.org/download/) 3.15 or higher
 * **Linting Tools**: `clang-format` and `clang-tidy`
 * **Dependencies**: 
   * [Crow](https://crowcpp.org/) (included via CMake FetchContent)
