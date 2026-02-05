@@ -36,4 +36,9 @@ Build the Image
 
 ```bash
 docker build -t cpp-rate-limiter
+
+docker run -d \
+  --name rate-limiter-service \
+  -p 8080:18080 \
+  cpp-rate-limiter
 ```
