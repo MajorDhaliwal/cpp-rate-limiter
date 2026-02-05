@@ -7,14 +7,14 @@ if [[ "$1" == "--clean" ]]; then
     rm -rf build
 fi
 
+# Create build directory
 mkdir -p build
-cd build
 
-# We use Release mode for the 10k+ RPS performance
-cmake .. -DCMAKE_BUILD_TYPE=Release
+cmake -S . -B build \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
-# Build using all CPU cores
-make -j$(nproc)
+cmake --build build -j$(nproc)
 
 echo "---------------------------------------"
 echo "Build Successful! Executable: build/limiter_app"
