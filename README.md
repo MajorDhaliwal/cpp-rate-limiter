@@ -28,3 +28,12 @@ A `build.sh` script is provided to automate the configuration and compilation pr
 **Make the script executable**:
    ```bash
    chmod +x build.sh
+```
+
+### Docker Setup
+
+Build the Image
+
+```bash
+docker build -t cpp-rate-limiter
+```
