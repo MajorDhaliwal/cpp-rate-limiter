@@ -28,6 +28,7 @@ A `build.sh` script is provided to automate the configuration and compilation pr
 **Make the script executable**:
    ```bash
    chmod +x build.sh
+   sh build.sh
 ```
 
 ### Docker Setup
