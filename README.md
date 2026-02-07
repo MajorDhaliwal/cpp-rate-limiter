@@ -35,8 +35,9 @@ A `build.sh` script is provided to automate the configuration and compilation pr
 Build the Image
 
 ```bash
-docker build -t cpp-rate-limiter
-
+docker build -t cpp-rate-limiter .
+```
+```bash
 docker run -d \
   --name rate-limiter-service \
   -p 8080:18080 \
