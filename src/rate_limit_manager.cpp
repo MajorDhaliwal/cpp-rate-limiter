@@ -63,7 +63,8 @@ bool RateLimitManager::is_allowed(const std::string &key, int &remaining, int &w
     } else {
         // Denied logic: wait_time is time until 1 full token is available
         remaining = 0;
-        wait_time = static_cast<int>(std::ceil((cfg_.token_cost - bucket.tokens) / cfg_.refill_rate));
+        wait_time =
+            static_cast<int>(std::ceil((cfg_.token_cost - bucket.tokens) / cfg_.refill_rate));
     }
 
     // Reset calculation: Time to reach max_tokens (after this request was handled)
