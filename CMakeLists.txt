@@ -6,6 +6,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(FetchContent)
 
+# Silence the CMP0135 timestamp warning for URL-based downloads
+# (guarded for CMake < 3.24 compatibility)
+if(POLICY CMP0135)
+    cmake_policy(SET CMP0135 NEW)
+endif()
+
 # ---------------------------------------------------------
 # 1. External Dependencies (JSON, Asio, Crow, spdlog)
 # ---------------------------------------------------------
@@ -14,7 +20,6 @@ include(FetchContent)
 FetchContent_Declare(
   json
   URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz
-  #DOWNLOAD_EXTRACT_TIMESTAMP TRUE
 )
 FetchContent_MakeAvailable(json)
 
@@ -56,7 +61,6 @@ enable_testing()
 FetchContent_Declare(
   googletest
   URL https://github.com/google/googletest/archive/refs/tags/v1.15.2.zip
-  #DOWNLOAD_EXTRACT_TIMESTAMP TRUE
 )
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)

@@ -55,21 +55,21 @@ bool RateLimitManager::is_allowed(const std::string &key, int &remaining, int &w
     bucket.last_update = now;
     bucket.last_access = now;
 
-    // Reset calculation: Time to reach max_tokens
-    double missing = cfg_.max_tokens - bucket.tokens;
-    reset_after = static_cast<int>(std::ceil(missing / cfg_.refill_rate));
-
-    if (bucket.tokens >= cfg_.token_cost) {
+    bool allowed = bucket.tokens >= cfg_.token_cost;
+    if (allowed) {
         bucket.tokens -= cfg_.token_cost;
         remaining = static_cast<int>(std::floor(bucket.tokens));
         wait_time = 0;
-        return true;
+    } else {
+        // Denied logic: wait_time is time until 1 full token is available
+        remaining = 0;
+        wait_time = static_cast<int>(std::ceil((cfg_.token_cost - bucket.tokens) / cfg_.refill_rate));
     }
 
-    // Denied logic: wait_time is time until 1 full token is available
-    remaining = 0;
-    wait_time = static_cast<int>(std::ceil((cfg_.token_cost - bucket.tokens) / cfg_.refill_rate));
-    return false;
+    // Reset calculation: Time to reach max_tokens (after this request was handled)
+    double missing = cfg_.max_tokens - bucket.tokens;
+    reset_after = static_cast<int>(std::ceil(missing / cfg_.refill_rate));
+    return allowed;
 }
 
 void RateLimitManager::run_janitor() {

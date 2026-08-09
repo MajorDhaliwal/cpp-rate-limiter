@@ -10,9 +10,9 @@
 #include <vector>
 
 struct TokenBucket {
-    double tokens;
-    std::chrono::steady_clock::time_point last_update;
-    std::chrono::steady_clock::time_point last_access;
+    double tokens = 0.0;
+    std::chrono::steady_clock::time_point last_update{};
+    std::chrono::steady_clock::time_point last_access{};
 };
 
 // Aligned to 64 bytes to prevent false sharing
