@@ -39,13 +39,14 @@ void init_logging() {
     }
 }
 
-int main() {
+int main(int argc, char *argv[]) {
     // 1. Initialize High-Speed Async Logging
     init_logging();
     spdlog::info("Initializing Rate Limiter Service...");
 
-    // 2. Load Config (Assumes your Config struct has these defaults or a loader)
-    Config cfg = Config::load_from_file("../config.json");
+    // 2. Load Config from the given path, or default to the Docker layout
+    std::string config_path = (argc > 1) ? argv[1] : "../config.json";
+    Config cfg = Config::load_from_file(config_path);
 
     // 3. Initialize Manager
     auto manager = std::make_shared<RateLimitManager>(cfg);

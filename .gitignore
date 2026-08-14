@@ -19,6 +19,9 @@
 # Executables
 limiter_app
 
+# Runtime logs
+logs/
+
 # CMake build folder 
 build/
 bin/

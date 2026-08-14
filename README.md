@@ -62,8 +62,12 @@ sh build.sh
 **Run the server:**
 
 ```bash
-./build/limiter_app
+./build/limiter_app ./config.json
 ```
+
+> Without an argument, the app looks for `../config.json` relative to the
+> working directory (the Docker layout). Pass the path explicitly when running
+> natively, or the default config values will be used.
 
 **Verify it's running:**
 
