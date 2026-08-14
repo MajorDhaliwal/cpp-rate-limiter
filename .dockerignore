@@ -1,0 +1,9 @@
+.git
+build
+bin
+lib
+CMakeCache.txt
+CMakeFiles/
+*.o
+*.obj
+limiter_app

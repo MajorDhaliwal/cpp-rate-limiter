@@ -22,27 +22,53 @@ Before building the project, ensure you have the following installed:
 
 ## Building the Project
 
-A `build.sh` script is provided to automate the configuration and compilation process.
+You can either build and run natively or use Docker. Both run the same server (listening on port `18080`); with Docker it is exposed on port `8080` via `-p 8080:18080`.
 
-### Using the Build Script
-**Make the script executable**:
-   ```bash
-   chmod +x build.sh
-   sh build.sh
-```
+### Option 1: Docker (Recommended)
 
-### Docker Setup
-
-Build the Image
+**Build the image:**
 
 ```bash
 docker build -t cpp-rate-limiter .
 ```
+
+**Run the container:**
+
 ```bash
 docker run -d \
   --name rate-limiter-service \
   -p 8080:18080 \
   cpp-rate-limiter
+```
+
+**Verify it's running:**
+
+```bash
+curl http://localhost:8080/
+docker logs rate-limiter-service
+```
+
+### Option 2: Build Natively
+
+A `build.sh` script is provided to automate the configuration and compilation process.
+
+**Make the script executable and build:**
+
+```bash
+chmod +x build.sh
+sh build.sh
+```
+
+**Run the server:**
+
+```bash
+./build/limiter_app
+```
+
+**Verify it's running:**
+
+```bash
+curl http://localhost:18080/
 ```
 # Performance
 
